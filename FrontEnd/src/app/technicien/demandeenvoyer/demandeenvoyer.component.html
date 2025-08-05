@@ -1,0 +1,274 @@
+<app-technicien></app-technicien>
+<div class="content">
+    
+
+  <main>
+ 
+
+    <div >
+      <div class="bodymenu">
+        <div class="containermenu">
+         <nav class="menu"  style="margin-top: -11%; margin-left: -7%;">
+             <ul class="main-menu">
+                 <li class="active">
+                   <!-- <i class="fa fa-home"></i> -->
+                  
+                  <a style="color: white; margin-left: 32%;"  a routerLink="/technicien/demande">Recu</a></li>
+                 <li class="with-submenu">
+                     <!-- <i class="fa fa-briefcase"></i> -->
+                     <a  style="color: white; margin-left: 22%;"  routerLink="/technicien/demandeenvoyer">Envoyer</a> 
+                     <!-- <i class="fa fa-caret-down"></i> -->
+                     <!-- <ul class="submenu">
+                         <li>React</li>
+                         <li>JavaScript</li>
+                         <li>CSS</li>
+                         <li>Animation</li>
+                     </ul> -->
+                 </li>
+                 <!-- <li><i class="fa fa-user"></i>About</li>
+                 <li><i class="fa fa-search"></i>Search</li> -->
+             </ul>
+         </nav>
+        </div>
+       </div>      
+      <div >
+        
+        <div class="case">
+          <!-- <br> -->
+        
+<!--           
+          <ul class="profile-header-tab nav nav-tabs">
+            <li class="nav-item" style="width: 9%;"><a a routerLink="/technicien/demande" class="nav-link " data-toggle="tab"><h4 style="text-align: center;">Reçu</h4></a></li>
+            <li class="nav-item" style="width: 9%;" ><a routerLink="/technicien/demandeenvoyer" class="nav-link active show" data-toggle="tab"><h4 style="text-align: center;"> Envoyer</h4></a></li>
+         </ul>
+          <hr> -->
+          <div style="margin-top: 10%;">
+          <div class="header-case">
+            
+            <h2>Les Demandes envoyées </h2>
+            <button class="button" (click)="onClickShowForm()">Ajouter</button>
+            
+          </div>
+          <div class="body-case">
+            <div class="tableau">
+              <table width="100%">
+                <thead>
+                  <tr>
+                    <!-- <th>Number</th> -->
+                    <th style="text-align: center;width: 12%;">Date </th>
+                    <th>Demandeur</th>
+                    <th style="text-align: center;width: 40%;">Demande</th>
+                    <th style="text-align: center;" >Ticket</th>
+                    <th style="text-align: center;" >État</th>
+             
+                   
+                  </tr>
+                </thead>
+                <tbody>
+             
+                  <tr  *ngFor="let demande of fetchedDemandes; let i = index" >
+                   <td>{{demande.Datecreaation|date:'medium'}}</td>
+                   <td>  <img src="./../../../../assets/images/{{demande.user_demande[0].user_img}}" alt="Admin" class="rounded-circle p-1 btn-light" width="40" height="40">  {{demande.user_demande[0].name}}</td>
+                   <td>{{demande.contenu}}</td>
+                   <td><button class="btn btn-success add-btn" style="width: 100%;" (click)="onClickShowForm2(demande.ticket_id,demande)" >Consulter</button> </td>
+                  
+                   
+                    
+
+
+                    <td *ngIf="demande.etat=='acceptée'"><span class="status-produit color-three"></span>{{demande.etat}}</td>
+                    <td *ngIf="demande.etat=='refusée'"><span class="status-produit color-one"></span>{{demande.etat}}</td>  
+                    <td *ngIf="demande.etat=='pending'"><span class="status-produit color-two"></span>En attente</td>  
+                  
+                  
+                  
+                 
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+</div>
+
+
+      <div class="model-bg" *ngIf="showAddDemandeForm" >
+
+        <a class="close-button" (click)="onClickCloseForm()">X</a>
+        <div class="edit">
+          <!-- create form -->
+          <form [formGroup]="formaddDemande" (submit)="onAddSubmit()">
+            
+            <div class="form-group">
+                <label for="contenu">Demande </label>
+                <!-- <input type="text" class="form-control" id="contenu" formControlName="contenu" placeholder="Enter user name"> -->
+                <textarea class="form-control" id="contenu" formControlName="contenu" placeholder="decrit demande"></textarea>
+            </div>
+              <!-- <div class="form-group">
+                <label for="recepteur_id">a : </label>
+                <input type="text" class="form-control" id="recepteur_id" formControlName="recepteur_id" placeholder="Enter user email">
+              </div> -->
+              <div class="form-group">
+                <label for="radio">au technicien: </label>
+                <!-- <input type="text" class="form-control" id="type" formControlName="type" placeholder="Enter user type"> -->
+                <select   class="form-control" id="recepteur_id" formControlName="recepteur_id" name="recepteur_id">
+                 
+                <option *ngFor="let ticket of fetchedtechniciens; let i = index" value={{ticket._id}}>{{ticket.name}}</option>
+                
+            
+              </select>
+              </div>
+              <div class="form-group">
+                <label for="radio">à : </label>
+                <select class="form-control" id="recepteur_id" formControlName="recepteur_id" name="recepteur_id">
+                 
+                <option *ngFor="let admin of fetchedadmin; let i = index" value={{admin._id}}>{{admin.name}}</option>
+                
+            
+              </select>
+              </div>
+              <div class="form-group">
+                <label for="radio">ticket : </label>
+                <!-- <input type="text" class="form-control" id="type" formControlName="type" placeholder="Enter user type"> -->
+                <select class="form-control" id="ticket_id" formControlName="ticket_id" name="ticket_id">
+                 
+                <option *ngFor="let ticket of fetchedTicket; let i = index" value={{ticket._id}}>{{ticket.description}}</option>
+                
+            
+              </select>
+              </div>
+           
+           
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      
+        </div>
+      
+      
+      </div>
+  
+ 
+      <div class="model-bg" style="margin-top: 0%;" *ngIf="showTicketDetails">
+              
+        <a class="close-button" (click)="onClickCloseForm2()">X</a>
+        <div class="edit" style="margin-top: -5%;">
+          <!-- create form -->
+          <!-- <form >
+            <h3>Ticket info</h3>
+           
+            <div>
+              
+              <h4 style="text-align: center;">{{currentticket.description}}</h4>
+             
+            <h5 style="text-align: center;">Etat:{{currentticket.etat}}</h5>
+          
+            <h5 style="text-align: center;">Demandeur:{{user.name}}</h5>
+            <h5 style="text-align: center;">technicien:{{technicienaffecte.name}}</h5>
+            <h5 style="text-align: center;">solution :{{currentticket.note}}</h5>
+            <button class="btn btn-success add-btn" style="width: 25%;"  (click)="onDeleteTiket(currentticket._id)" >Supprimer</button> 
+      </div>
+      
+      
+          </form> -->
+          <div id="generic_price_table" style="margin-top: 0%;">   
+            <section>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-22">
+                                <!--PRICE HEADING START-->
+                                <!-- <div class="price-heading clearfix">
+                                    <h3>Ticket info</h3>
+                                </div> -->
+                                <!--//PRICE HEADING END-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        
+                        <!--BLOCK ROW START-->
+                        <div class="row">
+                            <div class="col-md-12">
+                            
+                              <!--PRICE CONTENT START-->
+                                <div class="generic_content clearfix">
+                                    
+                                    <!--HEAD PRICE DETAIL START-->
+                                    <div class="generic_head_price clearfix">
+                                    
+                                        <!--HEAD CONTENT START-->
+                                        <div class="generic_head_content clearfix">
+                                        
+                                          <!--HEAD START-->
+                                            <div class="head_bg"></div>
+                                            <div class="head">
+                                                <span>ticket</span>
+                                            </div>
+                                            <!--//HEAD END-->
+                                            
+                                        </div>
+                                        <!--//HEAD CONTENT END-->
+                                        
+                                        <!--PRICE START-->
+                                        <div class="generic_price_tag clearfix">	
+                                            <span class="price">
+                                                <span >{{demandetest.user_tickets[0].description}}</span>
+                                                <!-- <span class="currency">99</span> -->
+                                                <!-- <span class="cent">{{currentticket.description}}</span> -->
+                                                <!-- <span class="month">/MON</span> -->
+                                            </span>
+                                        </div>
+                                        <!--//PRICE END-->
+                                        
+                                    </div>                            
+                                    <!--//HEAD PRICE DETAIL END-->
+                                    
+                                    <!--FEATURE LIST START-->
+                                    <div class="generic_feature_list">
+                                      <ul>
+                                          
+                                          
+                                            <li><span>Demandeur:</span> {{user.name}}</li>
+                                            <!-- <li><span>technicien:</span> {{technicienaffecte.name}}</li> -->
+                                            <li><span>Date de création:</span> {{demandetest.user_tickets[0].Datecreaation|date:'medium'}}</li>
+                                        </ul>
+                                    </div>
+                                    <div class="generic_feature_list">
+                                      <ul>
+                                          
+                                          
+                                            
+
+                                          </ul>
+                                    </div>
+                                    <!--//FEATURE LIST END-->
+                                    
+                                    <!--BUTTON START-->
+                                     <!-- <div class="btn-group">
+                                      <button (click)="onDeleteTiket(currentticket._id)">supprimer</button>
+                                      <button  (click)="onClickShowFormEdit()">modifier</button>
+                                      <button (click)="onClickShowcloturation(currentticket)">cloturer</button>
+                                    </div> -->
+                          
+                                    <!--//BUTTON END-->
+                                    
+                                </div>
+                                <!--//PRICE CONTENT END-->
+                                    
+                            </div>
+                      
+                          
+                        </div>	
+                        <!--//BLOCK ROW END-->
+                        
+                    </div>
+                </section>             
+              <!-- <footer>
+                  <a class="bottom_btn" href="#">&copy; MrSahar</a>
+                </footer> -->
+            </div>
+          </div>
+        </div>
+    

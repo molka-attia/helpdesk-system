@@ -1,0 +1,295 @@
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" style="margin-left: 15%;margin-top: 7%;background-color: aliceblue;">
+   <div class="row">
+      <div class="col-md-12">
+         <div id="content" class="content content-full-width">
+            <!-- begin profile -->
+            <div class="profile">
+               <div class="profile-header">
+                  <!-- BEGIN profile-header-cover -->
+                  <div class="profile-header-cover"></div>
+                 
+                  <ul class="profile-header-tab nav nav-tabs">
+                     <li class="nav-item"><a a routerLink="/technicien/publications" class="nav-link active show" data-toggle="tab">Publique</a></li>
+                     <!-- <li class="nav-item"><a href="#profile-about" class="nav-link" data-toggle="tab">ABOUT</a></li>
+                     <li class="nav-item"><a href="#profile-photos" class="nav-link" data-toggle="tab">PHOTOS</a></li>
+                     <li class="nav-item"><a href="#profile-videos" class="nav-link" data-toggle="tab">VIDEOS</a></li> -->
+                     <li class="nav-item"><a routerLink="/technicien/publicationsgroupe" class="nav-link" data-toggle="tab">Groupe</a></li>
+                  </ul>
+                  <!-- END profile-header-tab -->
+               </div>
+            </div>
+            <!-- end profile -->
+
+
+            <!-- :-moz-placeholder {
+               color: #666;
+             } -->
+             <br>
+             <!-- <div class="widget-post" aria-labelledby="post-header-title" style="width: 58%;margin-right: 18%;"> -->
+               <div class="widget-post" aria-labelledby="post-header-title" style="width: 83%;margin-right: 5%;"  >
+               <div class="widget-post__header">
+                 <h2 class="widget-post__title" id="post-header-title">
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                   Publication
+                 </h2>
+               </div>
+               <form id="widget-form" class="widget-post__form" name="form" aria-label="post widget" [formGroup]="formaddPublication" (submit)="onajoutPublication()">
+                 <div class="widget-post__content">
+                   <label for="post-content" class="sr-only">Share</label>
+                   <textarea name="post" id="post-content" class="widget-post__textarea scroller" id="contenu" formControlName="contenu" placeholder="ajouter une publication"></textarea>
+                 </div>
+                 <div class="widget-post__options is--hidden" id="stock-options">
+                 </div>
+                 <div class="widget-post__actions post--actions">
+                   <div class="post-actions__attachments">
+                     <!-- <button type="button" class="btn post-actions__stock attachments--btn" aria-controls="stock-options" aria-haspopup="true">
+                       <i class="fa fa-usd" aria-hidden="true"></i>
+                       stock
+                     </button> -->
+                     <!-- <button type="button" class="btn post-actions__upload attachments--btn">
+                       <label for="upload-image" class="post-actions__label">
+                          <i class="fa fa-upload" aria-hidden="true"></i> 
+                         upload image
+                       </label>
+                     </button> -->
+                     <input type="file" id="upload-image" accept="image/*" multiple>
+                   </div>
+                   <div class="post-actions__widget">
+                     <button type="submit" class="btn post-actions__publish">Publier</button>
+                   </div>
+                 </div>
+               </form>
+             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- begin profile-content -->
+            <div class="profile-content"  >
+               <!-- begin tab-content -->
+               <div class="tab-content p-0">
+                  <!-- begin #profile-post tab -->
+                  <div class="tab-pane fade active show" id="profile-post">
+                     <!-- begin timeline -->
+                     <ul class="timeline">
+                        <li *ngFor="let publication of fetchedPublications; let i = index">
+                           <!-- begin timeline-time -->
+                           <div class="timeline-time">
+                              <span class="date">{{publication.Datecreaation|date:'mediumDate'}}</span>
+                              <span class="time">{{publication.Datecreaation|date:'shortTime'}}</span>
+                           </div>
+                           <!-- end timeline-time -->
+                           <!-- begin timeline-icon -->
+                           <div class="timeline-icon">
+                              <a href="javascript:;">&nbsp;</a>
+                           </div>
+                           <!-- end timeline-icon -->
+                           <!-- begin timeline-body -->
+                           <div class="timeline-body">
+                              <div class="timeline-header">
+                                 <span class="userimage"><img src="./../../../../assets/images/{{publication.user_publication[0].user_img}}" alt=""></span>
+                                 <span class="username">{{publication.user_publication[0].name}} {{publication.user_publication[0].prenom}}<small></small></span>
+                                 <!-- <span class="pull-right text-muted">18 Views</span> -->
+                              </div>
+                              <div class="timeline-content">
+                                 <p>
+                                   {{publication.contenu}}
+                                 </p>
+                              </div>
+                              <div class="timeline-likes">
+                                 <div class="stats-right">
+                                    <!-- <span class="stats-text">259 Shares</span> -->
+                                    <!-- <span class="stats-text">21 Comments</span> -->
+                                 </div>
+                                 <div class="stats">
+                                    <span class="fa-stack fa-fw stats-icon">
+                                    <!-- <i class="fa fa-circle fa-stack-2x text-danger"></i>
+                                    <i class="fa fa-heart fa-stack-1x fa-inverse t-plus-1"></i> -->
+                                    </span>
+                                    <span class="fa-stack fa-fw stats-icon">
+                                    <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                                    <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i> -->
+                                    </span>
+                                    <span class="stats-total"></span>
+                                 </div>
+                              </div>
+                              <div class="timeline-footer">
+                                 <!-- <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a> -->
+                                 <button href="javascript:;" (click)="onshow(publication._id)" style="background: none; 
+                                 color: inherit;
+                                 border: none;
+                                 padding: 0;
+                                 font: inherit;
+                                 cursor: pointer;
+                                 outline: inherit;" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> commentaires</button> 
+                                 <!-- <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a> -->
+                              </div>
+                              <div class="timeline-header" *ngIf="show==('1'+publication._id)" >
+                                 <div *ngFor="let commentaire of fetchedCommentaires; let i = index">
+                                  <hr>
+                                <span class="userimage"><img src="./../../../../assets/images/{{commentaire.user_commentaire[0].user_img}}" alt=""></span>
+                                <span class="username">{{commentaire.user_commentaire[0].name}} {{commentaire.user_commentaire[0].prenom}}<small></small></span>
+                                <span class="pull-right text-muted">{{commentaire.Datecreaation|date:'shortDate'}}</span>
+                                <br>
+                                <p style="margin-left: 6%;">{{commentaire.contenu}}</p>
+                               
+                            
+                            
+                              </div>  </div>
+                              <div class="timeline-comment-box">
+                                 <div class="user"><img src="./../../../../assets/images/{{user.user_img}}"></div>
+                                 <div class="input">
+                                    <form [formGroup]="formaddCommentaire" (submit)="onajout(publication._id)">
+                                       <div class="input-group">
+                                          <input type="text" class="form-control rounded-corner" id="contenu" formControlName="contenu" placeholder="ajouter un commentaire">
+                                          <span class="input-group-btn p-l-10">
+                                          <button class="btn btn-primary f-s-12 rounded-corner" type="submit" >Commenter</button>
+                                          </span>
+                                       </div>
+                                    </form>
+                                    
+                                 </div>
+                              </div>
+                           </div>
+                           <!-- end timeline-body -->
+                        </li>
+                        <li>
+                           <!-- begin timeline-time -->
+                           <!-- <div class="timeline-time">
+                              <span class="date">yesterday</span>
+                              <span class="time">20:17</span>
+                           </div> -->
+                           <!-- end timeline-time -->
+                           <!-- begin timeline-icon -->
+                           <!-- <div class="timeline-icon">
+                              <a href="javascript:;">&nbsp;</a>
+                           </div> -->
+                           <!-- end timeline-icon -->
+                           <!-- begin timeline-body -->
+                           <!-- <div class="timeline-body">
+                              <div class="timeline-header">
+                                 <span class="userimage"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""></span>
+                                 <span class="username">Sean Ngu</span>
+                                 <span class="pull-right text-muted">82 Views</span>
+                              </div>
+                              <div class="timeline-content">
+                                 <p>Location: United States</p>
+                              </div>
+                              <div class="timeline-footer">
+                                 <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                                 <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                                 <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
+                              </div>
+                           </div> -->
+                           <!-- end timeline-body -->
+                        <!-- </li>
+                        <li> -->
+                           <!-- begin timeline-time -->
+                           <!-- <div class="timeline-time">
+                              <span class="date">24 February 2014</span>
+                              <span class="time">08:17</span>
+                           </div> -->
+                           <!-- end timeline-time -->
+                           <!-- begin timeline-icon -->
+                           <!-- <div class="timeline-icon">
+                              <a href="javascript:;">&nbsp;</a>
+                           </div> -->
+                           <!-- end timeline-icon -->
+                           <!-- begin timeline-body -->
+                           <!-- <div class="timeline-body">
+                              <div class="timeline-header">
+                                 <span class="userimage"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""></span>
+                                 <span class="username">Sean Ngu</span>
+                                 <span class="pull-right text-muted">1,282 Views</span>
+                              </div>
+                              <div class="timeline-content">
+                                 <p class="lead">
+                                    <i class="fa fa-quote-left fa-fw pull-left"></i>
+                                    Quisque sed varius nisl. Nulla facilisi. Phasellus consequat sapien sit amet nibh molestie placerat. Donec nulla quam, ullamcorper ut velit vitae, lobortis condimentum magna. Suspendisse mollis in sem vel mollis.
+                                    <i class="fa fa-quote-right fa-fw pull-right"></i>
+                                 </p>
+                              </div>
+                              <div class="timeline-footer">
+                                 <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                                 <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                                 <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
+                              </div>
+                           </div> -->
+                           <!-- end timeline-body -->
+                        </li>
+                        <li>
+                           <!-- begin timeline-time -->
+                           <!-- <div class="timeline-time">
+                              <span class="date">10 January 2014</span>
+                              <span class="time">20:43</span>
+                           </div> -->
+                           <!-- end timeline-time -->
+                           <!-- begin timeline-icon -->
+                           <div class="timeline-icon">
+                              <a href="javascript:;">&nbsp;</a>
+                           </div>
+                           <!-- end timeline-icon -->
+                           <!-- begin timeline-body -->
+                           <!-- <div class="timeline-body">
+                              <div class="timeline-header">
+                                 <span class="userimage"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt=""></span>
+                                 <span class="username">Sean Ngu</span>
+                                 <span class="pull-right text-muted">1,021,282 Views</span>
+                              </div>
+                              <div class="timeline-content">
+                                 <h4 class="template-title">
+                                    <i class="fa fa-map-marker text-danger fa-fw"></i>
+                                    795 Folsom Ave, Suite 600 San Francisco, CA 94107
+                                 </h4>
+                                 <p>In hac habitasse platea dictumst. Pellentesque bibendum id sem nec faucibus. Maecenas molestie, augue vel accumsan rutrum, massa mi rutrum odio, id luctus mauris nibh ut leo.</p>
+                                 <p class="m-t-20">
+                                    <img src="../assets/img/gallery/gallery-5.jpg" alt="">
+                                 </p>
+                              </div>
+                              <div class="timeline-footer">
+                                 <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                                 <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a> 
+                                 <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
+                              </div>
+                           </div> -->
+                           <!-- end timeline-body -->
+                        </li>
+                        <li>
+                           <!-- begin timeline-icon -->
+                           <div class="timeline-icon">
+                              <a href="javascript:;">&nbsp;</a>
+                           </div>
+                           <!-- end timeline-icon -->
+                           <!-- begin timeline-body -->
+                           <!-- <div class="timeline-body">
+                              Loading...
+                           </div> -->
+                           <!-- begin timeline-body -->
+                        </li>
+                        
+                     </ul>
+                     <!-- end timeline -->
+                  </div>
+                  <!-- end #profile-post tab -->
+               </div>
+               <!-- end tab-content -->
+            </div>
+            <!-- end profile-content -->
+         </div>
+      </div>
+   </div>
+</div>
